@@ -29,8 +29,8 @@ session_start();
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
-<!-- Flatpickr JS -->
-<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <!-- Flatpickr JS -->
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 </head>
 
 <body>
@@ -173,7 +173,7 @@ session_start();
                 <?php else: ?>
                   <li><a href="#" data-bs-toggle="modal" data-bs-target="#loginModal">Login</a></li>
                 <?php endif; ?>
-s
+                s
               </ul>
             </div>
           </div>
@@ -238,34 +238,27 @@ s
   <section class="banner-form form-style2">
     <div class="container">
       <div class="form-content">
-      <div class="price-navtab text-center">
-            <ul
-              class="nav nav-tabs"
-              style="
+        <div class="price-navtab text-center">
+          <ul
+            class="nav nav-tabs"
+            style="
                 display: flex;
                 justify-content: center;
                 position: relative;
                 bottom: 60px;
                 gap: 30px;
-              "
-            >
-              <li class="active">
-                <a href="index.html" style="border-radius: 0%"
-                  ><i class="fa fa-plane"></i> Flight</a
-                >
-              </li>
-              <li>
-                <a href="index-hotel.html" style="border-radius: 0%"
-                  ><i class="flaticon-building"></i> Hotel</a
-                >
-              </li>
-              <li>
-                <a href="packages.html" style="border-radius: 0%"
-                  ><i class="flaticon-global"></i>Packages</a
-                >
-              </li>
-            </ul>
-          </div>
+              ">
+            <li class="active">
+              <a href="index.html" style="border-radius: 0%"><i class="fa fa-plane"></i>Air</a>
+            </li>
+            <li>
+              <a href="index-hotel.html" style="border-radius: 0%"><i class="flaticon-building"></i> Hotel</a>
+            </li>
+            <li>
+              <a href="packages.html" style="border-radius: 0%"><i class="flaticon-global"></i>Packages</a>
+            </li>
+          </ul>
+        </div>
         <div class="price-navtab text-center">
           <ul class="nav nav-tabs">
             <li class="active">
@@ -281,199 +274,203 @@ s
         </div>
 
         <div class="tab-content">
-        <div id="roundtrip" class="tab-pane in active">
-  <div class="row filter-box">
-    <!-- Flying From -->
-    <div class="col-lg-3 col-sm-12">
-      <div class="form-group">
-        <label>Flying From</label>
-        <div class="input-box">
-          <i class="flaticon-placeholder"></i>
-          <input type="text" id="flyingFrom" placeholder="Enter city or airport" autocomplete="off" />
-          <div id="fromDropdown" class="dropdown-content"></div>
-        </div>
-      </div>
-    </div>
+          <div id="roundtrip" class="tab-pane in active">
+            <div class="row filter-box">
+              <!-- Flying From -->
+              <div class="col-lg-3 col-sm-12">
+                <div class="form-group">
+                  <label>Flying From</label>
+                  <div class="input-box">
+                    <i class="flaticon-placeholder"></i>
+                    <input type="text" id="flyingFrom" placeholder="Enter city or airport" autocomplete="off" />
+                    <div id="fromDropdown" class="dropdown-content"></div>
+                  </div>
+                </div>
+              </div>
 
-    <!-- Flying To -->
-    <div class="col-lg-3 col-sm-12">
-      <div class="form-group">
-        <label>Flying To</label>
-        <div class="input-box">
-          <i class="flaticon-placeholder"></i>
-          <input type="text" id="flyingTo" placeholder="Enter city or airport" autocomplete="off" />
-          <div id="toDropdown" class="dropdown-content"></div>
-        </div>
-      </div>
-    </div>
+              <!-- Flying To -->
+              <div class="col-lg-3 col-sm-12">
+                <div class="form-group">
+                  <label>Flying To</label>
+                  <div class="input-box">
+                    <i class="flaticon-placeholder"></i>
+                    <input type="text" id="flyingTo" placeholder="Enter city or airport" autocomplete="off" />
+                    <div id="toDropdown" class="dropdown-content"></div>
+                  </div>
+                </div>
+              </div>
 
-    <!-- Depart Date -->
-    <div class="col-lg-3 col-sm-6">
-      <div class="form-group">
-        <label>Depart Date</label>
-        <div class="input-box">
-          <i class="flaticon-calendar"></i>
-          <input id="departDate" type="text" placeholder="Select Depart Date" readonly />
-        </div>
-      </div>
-    </div>
-    
-    <!-- Return Date -->
-    <div class="col-lg-3 col-sm-6">
-      <div class="form-group">
-        <label>Return Date</label>
-        <div class="input-box">
-          <i class="flaticon-calendar"></i>
-          <input id="returnDate" type="text" placeholder="Select Return Date" readonly />
-        </div>
-      </div>
-    </div>
+              <!-- Depart Date -->
+              <div class="col-lg-3 col-sm-6">
+                <div class="form-group">
+                  <label>Depart Date</label>
+                  <div class="input-box">
+                    <i class="flaticon-calendar"></i>
+                    <input id="departDate" type="text" placeholder="Select Depart Date" readonly />
+                  </div>
+                </div>
+              </div>
 
-    <!-- Adults -->
-    <div class="col-lg-3 col-sm-6">
-      <div class="form-group">
-        <label>Adults</label>
-        <div class="input-box">
-          <i class="flaticon-add-user"></i>
-          <select id="numAdults" class="niceSelect">
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-          </select>
-        </div>
-      </div>
-    </div>
+              <!-- Return Date -->
+              <div class="col-lg-3 col-sm-6">
+                <div class="form-group">
+                  <label>Return Date</label>
+                  <div class="input-box">
+                    <i class="flaticon-calendar"></i>
+                    <input id="returnDate" type="text" placeholder="Select Return Date" readonly />
+                  </div>
+                </div>
+              </div>
 
-    <!-- Children -->
-    <div class="col-lg-3">
-      <div class="form-group">
-        <label>Children</label>
-        <div class="input-box">
-          <i class="flaticon-add-user"></i>
-          <select id="numChildren" class="niceSelect">
-            <option value="0">0</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-          </select>
-        </div>
-      </div>
-    </div>
+              <!-- Adults -->
+              <div class="col-lg-3 col-sm-6">
+                <div class="form-group">
+                  <label>Adults</label>
+                  <div class="input-box">
+                    <i class="flaticon-add-user"></i>
+                    <select id="numAdults" class="niceSelect">
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
 
-    <!-- Search Button -->
-    <div class="col-lg-3 col-sm-12">
-      <div class="form-group mar-top-30">
-        <button id="searchFlights" class="biz-btn">
-          <i class="fa fa-search"></i> Find Now
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
-<style>
-  .flight-results {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 15px;
-    margin-top: 20px;
-  }
-  
-  .flight-card {
-    background: #fff;
-    border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    padding: 15px;
-    width: 320px;
-    transition: transform 0.2s ease-in-out;
-    border-left: 5px solid #007bff;
-  }
+              <!-- Children -->
+              <div class="col-lg-3">
+                <div class="form-group">
+                  <label>Children</label>
+                  <div class="input-box">
+                    <i class="flaticon-add-user"></i>
+                    <select id="numChildren" class="niceSelect">
+                      <option value="0">0</option>
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
 
-  .flight-card:hover {
-    transform: scale(1.05);
-  }
+              <!-- Search Button -->
+              <div class="col-lg-3 col-sm-12">
+                <div class="form-group mar-top-30">
+                  <button id="searchFlights" class="biz-btn">
+                    <i class="fa fa-search"></i> Find Now
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <style>
+            .flight-results {
+              display: flex;
+              flex-wrap: wrap;
+              justify-content: center;
+              gap: 15px;
+              margin-top: 20px;
+            }
 
-  .flight-card h4 {
-    margin: 10px 0;
-    color: #007bff;
-  }
+            .flight-card {
+              background: #fff;
+              border-radius: 10px;
+              box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+              padding: 15px;
+              width: 320px;
+              transition: transform 0.2s ease-in-out;
+              border-left: 5px solid #007bff;
+            }
 
-  .flight-card p {
-    margin: 5px 0;
-    font-size: 14px;
-    color: #333;
-  }
+            .flight-card:hover {
+              transform: scale(1.05);
+            }
 
-  .price {
-    font-size: 18px;
-    font-weight: bold;
-    color: #28a745;
-    margin-top: 10px;
-  }
+            .flight-card h4 {
+              margin: 10px 0;
+              color: #007bff;
+            }
 
-  .book-btn {
-    display: block;
-    width: 100%;
-    background: #007bff;
-    color: white;
-    border: none;
-    padding: 8px;
-    text-align: center;
-    border-radius: 5px;
-    margin-top: 10px;
-    cursor: pointer;
-    font-weight: bold;
-  }
+            .flight-card p {
+              margin: 5px 0;
+              font-size: 14px;
+              color: #333;
+            }
 
-  .book-btn:hover {
-    background: #0056b3;
-  }
-  </style>
+            .price {
+              font-size: 18px;
+              font-weight: bold;
+              color: #28a745;
+              margin-top: 10px;
+            }
 
-<!-- Flight Results Container -->
-<div id="displayFlights" class="flight-results"></div>
+            .book-btn {
+              display: block;
+              width: 100%;
+              background: #007bff;
+              color: white;
+              border: none;
+              padding: 8px;
+              text-align: center;
+              border-radius: 5px;
+              margin-top: 10px;
+              cursor: pointer;
+              font-weight: bold;
+            }
 
-<!-- Loading Indicator -->
-<div id="loadingIndicator" style="display:none; text-align:center; margin-top:20px;">
-  <p style="color: white;">Loading flights...</p>
-</div>
+            .book-btn:hover {
+              background: #0056b3;
+            }
+          </style>
 
-<style>
-  .dropdown-content {
-    position: absolute;
-    background: white;
-    border: 1px solid #ddd;
-    max-height: 200px;
-    overflow-y: auto;
-    width: 100%;
-    display: none;
-    z-index: 1000;
-  }
-  .dropdown-content div {
-    padding: 10px;
-    cursor: pointer;
-    border-bottom: 1px solid #eee;
-  }
-  .dropdown-content div:hover {
-    background: #f1f1f1;
-  }
-  .flight-card {
-    border: 1px solid #ddd;
-    padding: 15px;
-    margin: 10px;
-    border-radius: 5px;
-    background: #f9f9f9;
-  }
-  .airline {
-    font-weight: bold;
-    color: #444;
-    margin-top: 5px;
-  }
-</style>
+          <!-- Flight Results Container -->
+          <div id="displayFlights" class="flight-results"></div>
+
+          <!-- Loading Indicator -->
+          <div id="loadingIndicator" style="display:none; text-align:center; margin-top:20px;">
+            <p style="color: white;">Loading flights...</p>
+          </div>
+
+          <style>
+            .dropdown-content {
+              position: absolute;
+              background: white;
+              border: 1px solid #ddd;
+              max-height: 200px;
+              overflow-y: auto;
+              width: 100%;
+              display: none;
+              z-index: 1000;
+            }
+
+            .dropdown-content div {
+              padding: 10px;
+              cursor: pointer;
+              border-bottom: 1px solid #eee;
+            }
+
+            .dropdown-content div:hover {
+              background: #f1f1f1;
+            }
+
+            .flight-card {
+              border: 1px solid #ddd;
+              padding: 15px;
+              margin: 10px;
+              border-radius: 5px;
+              background: #f9f9f9;
+            }
+
+            .airline {
+              font-weight: bold;
+              color: #444;
+              margin-top: 5px;
+            }
+          </style>
 
 
           <div id="oneway" class="tab-pane">
@@ -1342,7 +1339,7 @@ s
   </div>
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
- 
+
 
 
   <!-- Bootstrap JS (Ensure this is included in your project) -->
@@ -1353,7 +1350,7 @@ s
 
 
   <!-- JavaScript for Add/Remove Functionality -->
- 
+
   <!-- JavaScript Fix -->
 
   <script src="js/bootstrap.min.js"></script>
