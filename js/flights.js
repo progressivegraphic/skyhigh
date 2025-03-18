@@ -49,7 +49,7 @@
     }
   }
 
-  function displayDropdown(options, dropdownId, inputId) {
+  function displayDropdown(options, dropdownId, inputId) { 
     const dropdown = document.getElementById(dropdownId);
     dropdown.innerHTML = "";
     dropdown.style.display = options.length ? "block" : "none";
@@ -113,37 +113,46 @@
     }
 });
 
-  document.getElementById("searchFlights").addEventListener("click", async function (event) {
-    event.preventDefault();
+document.getElementById("searchFlights").addEventListener("click", async function (event) {
+  event.preventDefault();
 
-    const origin = document.getElementById("flyingFrom").value;
-    const destination = document.getElementById("flyingTo").value;
-    const departureDate = document.getElementById("departDate").value;
-    const returnDate = document.getElementById("returnDate").value;
-    const adults = document.getElementById("numAdults").value;
-    const children = document.getElementById("numChildren").value;
+  const origin = document.getElementById("flyingFrom").value;
+  const destination = document.getElementById("flyingTo").value;
+  const departureDate = document.getElementById("departDate").value;
+  const returnDate = document.getElementById("returnDate").value;
+  const adults = document.getElementById("numAdults").value;
+  const children = document.getElementById("numChildren").value;
 
-    if (!origin || !destination || !departureDate) {
+  if (!origin || !destination || !departureDate) {
       alert("Please fill in all required fields.");
       return;
-    }
+  }
 
-    document.getElementById("loadingIndicator").style.display = "block";
+  document.getElementById("loadingIndicator").style.display = "block";
 
-    const token = await getAccessToken();
-    if (!token) return;
+  const token = await getAccessToken();
+  if (!token) return;
 
-    const apiUrl = `https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=${origin}&destinationLocationCode=${destination}&departureDate=${departureDate}&returnDate=${returnDate}&adults=${adults}&children=${children}&currencyCode=USD`;
+  const apiUrl = `https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=${origin}&destinationLocationCode=${destination}&departureDate=${departureDate}&returnDate=${returnDate}&adults=${adults}&children=${children}&currencyCode=USD`;
 
-    try {
+  try {
       const response = await fetch(apiUrl, { headers: { Authorization: `Bearer ${token}` } });
       const data = await response.json();
       document.getElementById("loadingIndicator").style.display = "none";
-      displayFlights(data.data);
-    } catch (error) {
+
+      if (!data.data || data.data.length === 0) {
+          alert("No flights found.");
+          return;
+      }
+
+      localStorage.setItem("flightResults", JSON.stringify(data.data));
+      window.location.href = "flight-result.php"; // Redirect to PHP page
+
+  } catch (error) {
       console.error("Error fetching flights:", error);
-    }
-  });
+  }
+});
+
   function displayFlights(flights) {
     const displayContainer = document.getElementById("displayFlights");
     displayContainer.innerHTML = ""; // Clear previous results
@@ -168,60 +177,28 @@
         const flightCard = document.createElement("div");
         flightCard.classList.add("flight-card");
         flightCard.innerHTML = `
-            <img src="${airlineLogo}" alt="${airlineName}" class="airline-logo" />
-            <p class="airline">✈️ ${airlineName} (${airlineCode})</p>
-            <p class="flight-route">${departure.iataCode} ✈️ ${arrival.iataCode}</p>
-            <div class="flight-details">
-                <p><strong>Departure:</strong> ${departure.at.replace("T", " ")}</p>
-                <p><strong>Arrival:</strong> ${arrival.at.replace("T", " ")}</p>
-                <p><strong>Duration:</strong> ${duration}</p>
-                <p><strong>Stops:</strong> ${stops === 0 ? "Direct Flight" : `${stops} Stop(s)`}</p>
-            </div>
-            <p class="price">$${price} ${currency}</p>
-            <button class="book-btn">Book Now</button>
+            <form action="results.php" method="post">
+                <input type="hidden" name="flightData" value='${JSON.stringify(flight)}' />
+                <img src="${airlineLogo}" alt="${airlineName}" class="airline-logo" />
+                <p class="airline">✈️ ${airlineName} (${airlineCode})</p>
+                <p class="flight-route">${departure.iataCode} ✈️ ${arrival.iataCode}</p>
+                <div class="flight-details">
+                    <p><strong>Departure:</strong> ${departure.at.replace("T", " ")}</p>
+                    <p><strong>Arrival:</strong> ${arrival.at.replace("T", " ")}</p>
+                    <p><strong>Duration:</strong> ${duration}</p>
+                    <p><strong>Stops:</strong> ${stops === 0 ? "Direct Flight" : `${stops} Stop(s)`}</p>
+                </div>
+                <p class="price">$${price} ${currency}</p>
+                <button type="submit" class="book-btn">View Details</button>
+            </form>
         `;
 
         displayContainer.appendChild(flightCard);
     });
 }
 
-// Function to map airline codes to airline names
-function getAirlineName(code) {
-    const airlines = {
-        "AA": "American Airlines",
-        "DL": "Delta Airlines",
-        "UA": "United Airlines",
-        "BA": "British Airways",
-        "LH": "Lufthansa",
-        "AF": "Air France",
-        "EK": "Emirates",
-        "QR": "Qatar Airways",
-        "SQ": "Singapore Airlines",
-        "TK": "Turkish Airlines",
-        "CX": "Cathay Pacific",
-        "AI": "Air India",
-        "QF": "Qantas",
-        "NH": "All Nippon Airways",
-        "JL": "Japan Airlines",
-    };
-    return airlines[code] || "Unknown Airline";
-}
 
-// Function to get airline logos (Placeholder Logos - Update with actual URLs)
-function getAirlineLogo(code) {
-    const airlineLogos = {
-        "AA": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/American_Airlines_logo_2013.svg/120px-American_Airlines_logo_2013.svg.png",
-        "DL": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Delta_Air_Lines_Logo.svg/120px-Delta_Air_Lines_Logo.svg.png",
-        "UA": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/United_Airlines_Logo.svg/120px-United_Airlines_Logo.svg.png",
-        "BA": "https://upload.wikimedia.org/wikipedia/en/thumb/2/20/British_Airways_Logo.svg/120px-British_Airways_Logo.svg.png",
-        "LH": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Lufthansa_Logo_2018.svg/120px-Lufthansa_Logo_2018.svg.png",
-        "EK": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Emirates_logo.svg/120px-Emirates_logo.svg.png",
-        "QR": "https://upload.wikimedia.org/wikipedia/en/thumb/5/53/Qatar_Airways_Logo.svg/120px-Qatar_Airways_Logo.svg.png",
-        "SQ": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Singapore_Airlines_Logo.svg/120px-Singapore_Airlines_Logo.svg.png",
-        "AI": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Air_India_2023.svg/330px-Air_India_2023.svg.png"
-    };
-    return airlineLogos[code] || "https://via.placeholder.com/60"; // Default placeholder logo
-}
+// Function to map airline codes to airline names
 
 
 $(document).ready(function () {
@@ -275,9 +252,7 @@ $(document).ready(function () {
     flightCount++;
   }
 
-  function findFlights() {
-    alert("Searching for flights...");
-  }
+
   document.getElementById("loginForm").addEventListener("submit", function (event) {
     event.preventDefault(); // Prevent page reload
 

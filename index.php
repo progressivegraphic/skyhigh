@@ -427,8 +427,8 @@ session_start();
             }
           </style>
 
-          <!-- Flight Results Container -->
-          <div id="displayFlights" class="flight-results"></div>
+<!-- Flight Results Container -->
+<div id="displayFlights" class="flight-results"></div>
 
           <!-- Loading Indicator -->
           <div id="loadingIndicator" style="display:none; text-align:center; margin-top:20px;">
@@ -475,30 +475,41 @@ session_start();
 
           <div id="oneway" class="tab-pane">
             <div class="row filter-box">
-              <div class="col-lg-3">
-                <div class="form-group">
-                  <label>Flying From</label>
-                  <div class="input-box">
-                    <i class="flaticon-placeholder"></i>
-                    <select class="niceSelect">
-                      <option value="1">Where are you going?</option>
-                      <option value="2">Argentina</option>
-                      <option value="3">Belgium</option>
-                      <option value="4">Canada</option>
-                      <option value="5">Denmark</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-3 col-sm-6">
-                <div class="form-group">
-                  <label>Depart Date</label>
-                  <div class="input-box">
-                    <i class="flaticon-calendar"></i>
-                    <input type="text" placeholder="yyyy-mm-dd" />
-                  </div>
-                </div>
-              </div>
+                 <!-- Flying From -->
+                 <div class="col-lg-3 col-sm-12">
+      <div class="form-group">
+        <label>Flying From</label>
+        <div class="input-box">
+          <i class="flaticon-placeholder"></i>
+          <input type="text" id="flyingFrom" placeholder="Enter city or airport" autocomplete="off" />
+          <div id="fromDropdown" class="dropdown-content"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Flying To -->
+    <div class="col-lg-3 col-sm-12">
+      <div class="form-group">
+        <label>Flying To</label>
+        <div class="input-box">
+          <i class="flaticon-placeholder"></i>
+          <input type="text" id="flyingTo" placeholder="Enter city or airport" autocomplete="off" />
+          <div id="toDropdown" class="dropdown-content"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Depart Date -->
+    <div class="col-lg-3 col-sm-6">
+      <div class="form-group">
+        <label>Depart Date</label>
+        <div class="input-box">
+          <i class="flaticon-calendar"></i>
+          <input id="departDate" type="text" placeholder="Select Depart Date" readonly />
+        </div>
+      </div>
+    </div>
+  
               <div class="col-lg-3">
                 <div class="form-group">
                   <label>Adult</label>
@@ -617,6 +628,7 @@ session_start();
     </div>
   </section>
   <!-- form ends -->
+  <div id="displayFlights" class="flight-results"></div>
 
   <!-- featured flight starts -->
   <section class="featured-flight">

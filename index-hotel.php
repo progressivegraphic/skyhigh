@@ -32,12 +32,74 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css"
     />
+    <script src="hotels.js"></script>
     <style>
 
 .user-profile:hover .dropdown-menu {
     display: block;
 }
+.suggestions {
+  position: absolute;
+  background: #fff;
+  list-style: none;
+  padding: 0;
+  margin: 5px 0 0;
+  width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 1000;
+}
+
+.suggestions li {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.suggestions li:hover {
+  background: #f0f0f0;
+}
     </style>
+    <script>
+      function fetchLocations() {
+    let query = document.getElementById("destination").value;
+    if (query.length < 3) return; // Avoid unnecessary API calls
+
+    fetch("fetch_locations.php?q=" + query)
+    .then(response => response.json())
+    .then(data => {
+        let suggestionBox = document.getElementById("destination-suggestions");
+        suggestionBox.innerHTML = "";
+        data.forEach(location => {
+            let item = document.createElement("li");
+            item.textContent = location.name;
+            item.setAttribute("data-code", location.code);
+            item.onclick = function() {
+                document.getElementById("destination").value = location.name;
+                document.getElementById("destination").setAttribute("data-code", location.code);
+                suggestionBox.innerHTML = "";
+            };
+            suggestionBox.appendChild(item);
+        });
+    });
+}
+function fetchHotels() {
+    let destinationCode = document.getElementById("destination").getAttribute("data-code");
+    let checkIn = document.getElementById("checkIn").value;
+    let checkOut = document.getElementById("checkOut").value;
+    let guests = document.getElementById("guests").value;
+
+    if (!destinationCode || !checkIn || !checkOut) {
+        alert("Please fill all fields.");
+        return;
+    }
+
+    window.location.href = `hotels.php?destination=${destinationCode}&checkIn=${checkIn}&checkOut=${checkOut}&guests=${guests}`;
+}
+
+
+    </script>
   </head>
   <body>
     <!-- Preloader -->
@@ -281,91 +343,72 @@
 
     <!-- form starts -->
     <section class="banner-form hotel-form">
-      <div class="container">
+    <div class="container">
         <div class="form-outer">
-          <div class="form-content">
-            <div class="row filter-box">
-              <div class="col-lg-3 col-sm-12 col-12">
-                <div class="form-group">
-                  <label>Your Destination</label>
-                  <div class="input-box">
-                    <i class="flaticon-placeholder"></i>
-                    <select class="niceSelect">
-                      <option value="1">Where are you going?</option>
-                      <option value="2">Argentina</option>
-                      <option value="3">Belgium</option>
-                      <option value="4">Canada</option>
-                      <option value="5">Denmark</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-3 col-sm-6 col-12">
-                <div class="form-group">
-                  <label>Check In</label>
-                  <div class="input-box">
-                    <i class="flaticon-calendar"></i>
-                    <input
-                      id="date-range0"
-                      type="text"
-                      placeholder="yyyy-mm-dd"
-                    />
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-3 col-sm-6 col-12">
-                <div class="form-group">
-                  <label>Check Out</label>
-                  <div class="input-box">
-                    <i class="flaticon-calendar"></i>
-                    <input
-                      id="date-range1"
-                      type="text"
-                      placeholder="yyyy-mm-dd"
-                    />
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-3 col-sm-6 col-12">
-                <div class="form-group">
-                  <label>Hotel Types</label>
-                  <div class="input-box">
-                    <i class="flaticon-add-user"></i>
-                    <select class="niceSelect">
-                      <option value="1">High Class</option>
-                      <option value="2">Middle Class</option>
-                      <option value="3">Low Class</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-3 col-sm-6 col-12">
-                <div class="form-group">
-                  <label>Person</label>
-                  <div class="input-box">
-                    <i class="flaticon-add-user"></i>
-                    <select class="niceSelect">
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
-                      <option value="4">4</option>
-                      <option value="5">5</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-3 col-sm-12 col-12">
-                <div class="form-group mar-top-30">
-                  <a href="#" class="biz-btn"
-                    ><i class="fa fa-search"></i> Find Now</a
-                  >
-                </div>
-              </div>
+            <div class="form-content">
+                <form action="hotels.php" method="GET">
+                    <div class="row filter-box">
+                        <div class="col-lg-3 col-sm-12 col-12">
+                            <div class="form-group">
+                                <label>Your Destination</label>
+                                <div class="input-box">
+                                    <i class="flaticon-placeholder"></i>
+                                    <input type="text" id="destination" name="destination" placeholder="Where are you going?" onkeyup="fetchLocations()" autocomplete="off">
+                                    <ul id="destination-suggestions" class="suggestions"></ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-sm-6 col-12">
+                            <div class="form-group">
+                                <label>Check In</label>
+                                <div class="input-box">
+                                    <i class="flaticon-calendar"></i>
+                                    <input id="checkIn" name="checkIn" type="date" required />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-sm-6 col-12">
+                            <div class="form-group">
+                                <label>Check Out</label>
+                                <div class="input-box">
+                                    <i class="flaticon-calendar"></i>
+                                    <input id="checkOut" name="checkOut" type="date" required />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-sm-6 col-12">
+                            <div class="form-group">
+                                <label>Guests</label>
+                                <div class="input-box">
+                                    <i class="flaticon-add-user"></i>
+                                    <select id="guests" name="guests" class="niceSelect">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-sm-12 col-12">
+                            <div class="form-group mar-top-30">
+                                <button type="submit" class="biz-btn" onclick="fetchHotels()">
+                                    <i class="fa fa-search"></i> Find Now
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
-          </div>
         </div>
-      </div>
-    </section>
+    </div>
+</section>
+
     <!-- form ends -->
 
     <!-- partners starts -->
